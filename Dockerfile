@@ -6,7 +6,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 
 COPY pyproject.toml ./
-RUN pip install --no-cache-dir .
+# Longer timeouts: flaky/slow links to files.pythonhosted.org often abort local builds.
+RUN pip install --no-cache-dir --default-timeout=120 --retries=5 .
 
 COPY app ./app
 
